@@ -7,7 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
@@ -29,31 +28,10 @@ interface NewsItem {
 const Index = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminPassword, setAdminPassword] = useState('');
+  const isAdmin = true;
 
-  const [games, setGames] = useState<Game[]>([
-    { id: '1', name: 'Прятки', description: 'КТ ищут спрятавшихся Т в течение времени', image: '🔍' },
-    { id: '2', name: 'Оборона', description: 'Т защищают зону от атакующих КТ', image: '🛡️' },
-    { id: '3', name: 'Нервы', description: 'Т смотрят вверх с фонариком, не двигаясь', image: '⚡' },
-  ]);
-
-  const [news, setNews] = useState<NewsItem[]>([
-    {
-      id: '1',
-      title: 'Обновление правил сервера',
-      content: 'Добавлены новые правила для администрации и обновлены правила ZFD',
-      date: '2024-11-24',
-      category: 'Правила'
-    },
-    {
-      id: '2',
-      title: 'Новая игра: ZFD',
-      content: 'На сервере появилась новая игра - Zombie FD с особыми правилами передвижения',
-      date: '2024-11-20',
-      category: 'Игры'
-    },
-  ]);
+  const [games, setGames] = useState<Game[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
 
   const [newGame, setNewGame] = useState({ name: '', description: '', image: '' });
   const [newNews, setNewNews] = useState({ title: '', content: '', category: '' });
@@ -300,15 +278,15 @@ const Index = () => {
           id: '7.1',
           title: 'Общие правила администрации',
           items: [
-            '1. Запрещено кикать/банить без причины [1/3 по донату, повторно - снятие]',
+            '1. Запрещено кикать/банить без причины [1/3 по донату, повтор - снятие]',
             '2. Младшие админы не снимают КТбан [устник, потом 1/3]',
-            '3. Администраторы должны вести себя адекватно [устник, потом 1/3]',
+            '3. Админы ведут себя адекватно [устник, потом 1/3]',
             '4. Играть каждый день 1 час. Неделя без входа [устник, 1/3, снятие]',
             '5. Не менять карту без голосования (искл. все просят) [устник, потом 1/3]',
             '6. Младшие/Средние/Старшие не дают 1/3',
-            '7. Админ не должен объяснять причину бана/кика/мута',
-            '8. У админа всегда должны быть доказательства',
-            '9. Админы соблюдают правила сервера - иначе снятие',
+            '7. Не обязаны объяснять причину бана/кика/мута',
+            '8. Всегда иметь доказательства на бан/кик/мут',
+            '9. Соблюдать правила сервера — иначе снятие',
           ]
         }
       ]
@@ -322,13 +300,13 @@ const Index = () => {
           title: 'Правила использования паутинки',
           items: [
             '1. Запрещено перетаскивать грабом без согласия [устное, потом 1/3]',
-            '2. Категорически запрещено багать донат [1/3]',
+            '2. Запрещено багать донат [1/3]',
             '3. Запрещено избегать приказы контрола [устное, потом 1/3]',
             '4. Запрещено багать карту грабом [устное, потом 1/3]',
-            '5. Контрол может запретить паутинку/граб [устное, потом 1/3]',
+            '5. Контрол может запрещать паутинку/граб [устное, потом 1/3]',
             '6. Запрещено улетать за пределы карты [устное, потом 1/3]',
-            '7. Запрещено начинать бунт с паутинкой [предупр., потом 1/3]',
-            '8. Запрещено во время !lr, обороны, пряток [предупр., потом 1/3]',
+            '7. Запрещено начинать бунт с паутинкой [пред., потом 1/3]',
+            '8. Запрещено во время !lr, обороны, пряток [пред., потом 1/3]',
           ]
         }
       ]
@@ -342,15 +320,14 @@ const Index = () => {
           title: 'Проведение обороны',
           items: [
             '!control объявляет оборону, называет место и кто обороняется',
-            'Обороняющимся можно залезать в нычки на территории обороны',
-            '1) Можно запретить оружие для T (не все автоматы/пистолеты)',
-            '2) Указать время начала и завершения (минимум 2 минуты)',
-            '3) Запрещено писать !lr (искл. бунт)',
-            '4) Можно установить наказание за перемирие (не всей команде)',
-            '5) Оборону объявлять только после 1 раунда',
-            '6) Оборону проводить 3 раунда за карту',
-            '7) По истечении времени CT убивают оставшихся Т',
-            '8) Нельзя в оружейке и лечебке',
+            'Можно запретить оружие для T (нельзя все виды)',
+            'Указать время начала и завершения (минимум 2 минуты)',
+            'Во время обороны запрещено писать !lr (искл. бунт)',
+            'Можно установить наказание за перемирие (не всей команде)',
+            'Оборону объявлять только после 1 раунда',
+            'Проводить оборону 3 раунда за карту',
+            'После времени CT убивают оставшихся T',
+            'Нельзя проводить в оружейке и лечебке',
           ]
         }
       ]
@@ -363,74 +340,64 @@ const Index = () => {
           id: '10.1',
           title: 'Проведение пряток',
           items: [
-            '!control объявляет прятки, все CT в оружейке до времени поиска',
-            '1) Запрещён бунт для Т во время пряток',
-            '2) Указать время начала и завершения (минимум 2 минуты)',
-            '3) Запрещено писать !lr (можно выбрать бунт)',
-            '4) Можно назначить наказание (не всей команде)',
-            '5) Прятки только после 1 раунда',
-            '6) Прятки 3 раунда за карту',
-            '7) Админам запрещено бунтовать замаскированными [slay, потом kick]',
-            '8) По истечении времени победившие Т убивают CT',
-            '9) Запрещено приседать замаскированным [предупр., потом 1/3]',
-            '10) Запрещено прятаться в баг зонах',
+            '!control объявляет прятки, все CT в оружейке до поиска',
+            'Во время пряток запрещён бунт для T',
+            'Указать время начала и завершения (минимум 2 минуты)',
+            'Запрещено писать !lr (можно выбрать бунт)',
+            'Можно назначить наказание (не всей команде)',
+            'Прятки только после 1 раунда',
+            'Прятки 3 раунда за карту',
+            'Админам запрещено бунтовать замаскированными [slay, потом kick]',
+            'После времени победившие T убивают CT',
+            'Запрещено приседать замаскированным [пред., потом 1/3]',
+            'Запрещено прятаться в баг зонах',
           ]
         }
       ]
     }
   ];
 
-  const handleAdminLogin = () => {
-    if (adminPassword === 'admin123') {
-      setIsAdmin(true);
-      toast({ title: 'Вход выполнен', description: 'Вы вошли в админ-панель' });
-    } else {
-      toast({ title: 'Ошибка', description: 'Неверный пароль', variant: 'destructive' });
-    }
-  };
-
   const handleAddGame = () => {
     if (newGame.name && newGame.description) {
-      setGames([...games, { ...newGame, id: Date.now().toString(), image: newGame.image || '🎮' }]);
+      setGames((prev) => [...prev, { ...newGame, id: Date.now().toString(), image: newGame.image || '🎮' }]);
       setNewGame({ name: '', description: '', image: '' });
-      toast({ title: 'Игра добавлена', description: `${newGame.name} успешно добавлена` });
+      toast({ title: 'Игра добавлена', description: 'Новый режим успешно добавлен' });
     }
   };
 
   const handleDeleteGame = (id: string) => {
-    setGames(games.filter(g => g.id !== id));
-    toast({ title: 'Игра удалена', description: 'Игра успешно удалена' });
+    setGames((prev) => prev.filter((game) => game.id !== id));
+    toast({ title: 'Игра удалена', description: 'Режим удалён из списка' });
   };
 
   const handleAddNews = () => {
     if (newNews.title && newNews.content) {
-      setNews([
+      setNews((prev) => [
         { ...newNews, id: Date.now().toString(), date: new Date().toISOString().split('T')[0] },
-        ...news
+        ...prev
       ]);
       setNewNews({ title: '', content: '', category: '' });
-      toast({ title: 'Новость опубликована', description: `${newNews.title} добавлена` });
+      toast({ title: 'Новость опубликована', description: 'Запись успешно добавлена' });
     }
   };
 
   const handleDeleteNews = (id: string) => {
-    setNews(news.filter(n => n.id !== id));
-    toast({ title: 'Новость удалена', description: 'Новость успешно удалена' });
+    setNews((prev) => prev.filter((item) => item.id !== id));
+    toast({ title: 'Новость удалена', description: 'Запись удалена из ленты' });
   };
 
-  const filteredRules = rules.map(rule => ({
+  const filteredRules = rules.map((rule) => ({
     ...rule,
-    sections: rule.sections.map(section => ({
-      ...section,
-      items: section.items.filter(item =>
-        item.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    })).filter(section => section.items.length > 0)
-  })).filter(rule => rule.sections.length > 0);
+    sections: rule.sections
+      .map((section) => ({
+        ...section,
+        items: section.items.filter((item) => item.toLowerCase().includes(searchQuery.toLowerCase()))
+      }))
+      .filter((section) => section.items.length > 0)
+  })).filter((rule) => rule.sections.length > 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
-      {/* Header */}
       <header className="border-b border-border/40 bg-card/50 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -440,45 +407,19 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold tracking-tight">JailBreak Rules</h1>
-                <p className="text-sm text-muted-foreground">Правила игрового сервера</p>
+                <p className="text-sm text-muted-foreground">Панель управления сервером</p>
               </div>
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Icon name="Shield" size={16} />
-                  Админ
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Вход в админ-панель</DialogTitle>
-                  <DialogDescription>Введите пароль для доступа к управлению</DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4 pt-4">
-                  <div className="space-y-2">
-                    <Label>Пароль</Label>
-                    <Input
-                      type="password"
-                      value={adminPassword}
-                      onChange={(e) => setAdminPassword(e.target.value)}
-                      placeholder="Введите пароль"
-                    />
-                  </div>
-                  <Button onClick={handleAdminLogin} className="w-full">
-                    Войти
-                  </Button>
-                  <p className="text-xs text-muted-foreground text-center">Демо пароль: admin123</p>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <Badge variant="outline" className="gap-1">
+              <Icon name="Shield" size={14} />
+              Админ-доступ активен
+            </Badge>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="rules" className="space-y-6">
+        <Tabs defaultValue="rules" className="spaceýa6">
           <TabsList className="grid w-full grid-cols-4 max-w-2xl mx-auto bg-muted/50 p-1">
             <TabsTrigger value="rules" className="gap-2">
               <Icon name="BookOpen" size={16} />
@@ -492,15 +433,12 @@ const Index = () => {
               <Icon name="Newspaper" size={16} />
               Новости
             </TabsTrigger>
-            {isAdmin && (
-              <TabsTrigger value="admin" className="gap-2">
-                <Icon name="Settings" size={16} />
-                Админка
-              </TabsTrigger>
-            )}
+            <TabsTrigger value="admin" className="gap-2">
+              <Icon name="Settings" size={16} />
+              Админка
+            </TabsTrigger>
           </TabsList>
 
-          {/* Rules Tab */}
           <TabsContent value="rules" className="space-y-6">
             <Card className="border-primary/20 bg-gradient-to-br from-card to-card/50">
               <CardHeader>
@@ -512,7 +450,7 @@ const Index = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="relative">
-                  <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-я-1/2 text-muted-foreground" />
                   <Input
                     placeholder="Поиск по правилам..."
                     value={searchQuery}
@@ -520,7 +458,6 @@ const Index = () => {
                     className="pl-10"
                   />
                 </div>
-
                 <Accordion type="single" collapsible className="space-y-3">
                   {(searchQuery ? filteredRules : rules).map((rule) => (
                     <AccordionItem
@@ -553,7 +490,6 @@ const Index = () => {
             </Card>
           </TabsContent>
 
-          {/* Games Tab */}
           <TabsContent value="games" className="space-y-6">
             <Card className="border-secondary/20 bg-gradient-to-br from-card to-card/50">
               <CardHeader>
@@ -561,39 +497,38 @@ const Index = () => {
                   <Icon name="Trophy" size={32} className="text-secondary" />
                   Игры на сервере
                 </CardTitle>
-                <CardDescription>Доступные игровые режимы и их описание</CardDescription>
+                <CardDescription>Добавляйте режимы и описания вручную</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {games.map((game) => (
-                    <Card key={game.id} className="border-border/40 bg-muted/30 hover:border-primary/40 transition-all hover:scale-105">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <div className="text-4xl">{game.image}</div>
-                          {isAdmin && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleDeleteGame(game.id)}
-                              className="h-8 w-8"
-                            >
+                {games.length === 0 ? (
+                  <div className="text-center py-10 text-muted-foreground">
+                    <p className="text-lg font-semibold">Пока нет опубликованных игр</p>
+                    <p className="text-sm">Добавьте первую игру через админку</p>
+                  </div>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {games.map((game) => (
+                      <Card key={game.id} className="border-border/40 bg-muted/30 hover:border-primary/40 transition-all hover:scale-105">
+                        <CardHeader>
+                          <div className="flex items-center justify-between">
+                            <div className="text-4xl">{game.image}</div>
+                            <Button variant="ghost" size="icon" onClick={() => handleDeleteGame(game.id)} className="h-8 w-8">
                               <Icon name="Trash2" size={16} />
                             </Button>
-                          )}
-                        </div>
-                        <CardTitle className="text-xl">{game.name}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground">{game.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                          </div>
+                          <CardTitle className="text-xl">{game.name}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{game.description}</p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* News Tab */}
           <TabsContent value="news" className="space-y-6">
             <Card className="border-accent/20 bg-gradient-to-br from-card to-card/50">
               <CardHeader>
@@ -601,134 +536,128 @@ const Index = () => {
                   <Icon name="Newspaper" size={32} className="text-accent" />
                   Новости и обновления
                 </CardTitle>
-                <CardDescription>Последние новости сервера</CardDescription>
+                <CardDescription>Публикуйте обновления сервера</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {news.map((item) => (
-                  <Card key={item.id} className="border-border/40 bg-muted/30">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-2 flex-1">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline">{item.category}</Badge>
-                            <span className="text-xs text-muted-foreground">{item.date}</span>
+                {news.length === 0 ? (
+                  <div className="text-center py-10 text-muted-foreground">
+                    <p className="text-lg font-semibold">Новостей ещё нет</p>
+                    <p className="text-sm">Расскажите игрокам о свежих изменениях</p>
+                  </div>
+                ) : (
+                  news.map((item) => (
+                    <Card key={item.id} className="border-border/40 bg-muted/30">
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="space-y-2 flex-1">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline">{item.category || 'Обновление'}</Badge>
+                              <span className="text-xs text-muted-foreground">{item.date}</span>
+                            </div>
+                            <CardTitle className="text-xl">{item.title}</CardTitle>
                           </div>
-                          <CardTitle className="text-xl">{item.title}</CardTitle>
-                        </div>
-                        {isAdmin && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDeleteNews(item.id)}
-                            className="h-8 w-8"
-                          >
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteNews(item.id)} className="h-8 w-8">
                             <Icon name="Trash2" size={16} />
                           </Button>
-                        )}
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{item.content}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{item.content}</p>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Admin Tab */}
-          {isAdmin && (
-            <TabsContent value="admin" className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                {/* Add Game */}
-                <Card className="border-primary/20">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Icon name="Plus" size={24} className="text-primary" />
-                      Добавить игру
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Название игры</Label>
-                      <Input
-                        value={newGame.name}
-                        onChange={(e) => setNewGame({ ...newGame, name: e.target.value })}
-                        placeholder="Например: Саймон говорит"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Описание</Label>
-                      <Textarea
-                        value={newGame.description}
-                        onChange={(e) => setNewGame({ ...newGame, description: e.target.value })}
-                        placeholder="Краткое описание игры"
-                        rows={3}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Эмодзи (необязательно)</Label>
-                      <Input
-                        value={newGame.image}
-                        onChange={(e) => setNewGame({ ...newGame, image: e.target.value })}
-                        placeholder="🎮"
-                        maxLength={2}
-                      />
-                    </div>
-                    <Button onClick={handleAddGame} className="w-full">
-                      <Icon name="Plus" size={16} className="mr-2" />
-                      Добавить игру
-                    </Button>
-                  </CardContent>
-                </Card>
+          <TabsContent value="admin" className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card className="border-primary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Icon name="Plus" size={24} className="text-primary" />
+                    Добавить игру
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Название игры</Label>
+                    <Input
+                      value={newGame.name}
+                      onChange={(e) => setNewGame({ ...newGame, name: e.target.value })}
+                      placeholder="Например: Саймон говорит"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Описание</Label>
+                    <Textarea
+                      value={newGame.description}
+                      onChange={(e) => setNewGame({ ...newGame, description: e.target.value })}
+                      placeholder="Краткое описание игры"
+                      rows={3}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Эмодзи (необязательно)</Label>
+                    <Input
+                      value={newGame.image}
+                      onChange={(e) => setNewGame({ ...newGame, image: e.target.value })}
+                      placeholder="🎮"
+                      maxLength={2}
+                    />
+                  </div>
+                  <Button onClick={handleAddGame} className="w-full">
+                    <Icon name="Plus" size=16 className="mr-2" />
+                    Добавить игру
+                  </Button>
+                </CardContent>
+              </Card>
 
-                {/* Add News */}
-                <Card className="border-secondary/20">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Icon name="Plus" size={24} className="text-secondary" />
-                      Добавить новость
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Заголовок</Label>
-                      <Input
-                        value={newNews.title}
-                        onChange={(e) => setNewNews({ ...newNews, title: e.target.value })}
-                        placeholder="Название новости"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Категория</Label>
-                      <Input
-                        value={newNews.category}
-                        onChange={(e) => setNewNews({ ...newNews, category: e.target.value })}
-                        placeholder="Правила, Игры, Обновления..."
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Содержание</Label>
-                      <Textarea
-                        value={newNews.content}
-                        onChange={(e) => setNewNews({ ...newNews, content: e.target.value })}
-                        placeholder="Текст новости"
-                        rows={3}
-                      />
-                    </div>
-                    <Button onClick={handleAddNews} className="w-full">
-                      <Icon name="Plus" size={16} className="mr-2" />
-                      Опубликовать новость
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          )}
+              <Card className="border-secondary/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Icon name="Plus" size={24} className="text-secondary" />
+                    Добавить новость
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Заголовок</Label>
+                    <Input
+                      value={newNews.title}
+                      onChange={(e) => setNewNews({ ...newNews, title: e.target.value })}
+                      placeholder="Название новости"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Категория</Label>
+                    <Input
+                      value={newNews.category}
+                      onChange={(e) => setNewNews({ ...newNews, category: e.target.value })}
+                      placeholder="Правила, Игры, Обновления..."
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Содержание</Label>
+                    <Textarea
+                      value={newNews.content}
+                      onChange={(e) => setNewNews({ ...newNews, content: e.target.value })}
+                      placeholder="Текст новости"
+                      rows={3}
+                    />
+                  </div>
+                  <Button onClick={handleAddNews} className="w-full">
+                    <Icon name="Plus" size=16 className="mr-2" />
+                    Опубликовать новость
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
         </Tabs>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-border/40 bg-card/30 backdrop-blur-sm mt-12">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
