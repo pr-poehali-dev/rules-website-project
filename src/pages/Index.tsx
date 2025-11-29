@@ -167,7 +167,7 @@ const Index = () => {
     {
       id: '4',
       title: 'Игра за !control',
-      name: 'КОНТРОЛЛЕР',
+      name: 'КОНТРОЛ',
       icon: 'Crown',
       color: 'from-yellow-500 to-amber-600',
       sections: [
@@ -219,7 +219,7 @@ const Index = () => {
     {
       id: '5',
       title: 'LR (Last Request)',
-      name: 'ПОСЛЕДНИЙ ЗАПРОС',
+      name: 'LR',
       icon: 'Target',
       color: 'from-purple-500 to-pink-600',
       sections: [
@@ -523,20 +523,9 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Badge variant="outline" className="gap-1 border-orange-500/50 text-orange-400">
-                <Icon name="Users" size={14} />
-                Возраст 13+
-              </Badge>
-              <Badge variant="outline" className="gap-1 border-green-500/50 text-green-400">
-                <Icon name="Mic" size={14} />
-                Микрофон обязателен
-              </Badge>
-              <Badge variant="outline" className="gap-1 border-blue-500/50 text-blue-400">
-                <Icon name="BookOpen" size={14} />
-                Версия 34
-              </Badge>
-            </div>
+            <p className="text-base text-slate-300 font-medium">
+              Правила нашего сервера
+            </p>
           </div>
         </div>
       </header>
@@ -548,9 +537,7 @@ const Index = () => {
               <Icon name="ScrollText" size={36} className="text-orange-500" />
               Правила сервера
             </CardTitle>
-            <CardDescription className="text-slate-400 text-base">
-              Полный свод правил для игроков и администрации. Изучите перед игрой!
-            </CardDescription>
+
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="relative">
