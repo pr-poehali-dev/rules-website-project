@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
@@ -12,8 +11,10 @@ const Index = () => {
   const rules = [
     {
       id: '1',
-      title: '1. Общие правила',
+      title: 'Общие правила',
+      name: 'ОСНОВЫ СЕРВЕРА',
       icon: 'BookOpen',
+      color: 'from-blue-500 to-cyan-500',
       sections: [
         {
           id: '1.1',
@@ -55,8 +56,10 @@ const Index = () => {
     },
     {
       id: '2',
-      title: '2. Игра за T',
+      title: 'Игра за T',
+      name: 'ТЕРРОРИСТЫ',
       icon: 'Users',
+      color: 'from-red-500 to-orange-500',
       sections: [
         {
           id: '2.1',
@@ -105,8 +108,10 @@ const Index = () => {
     },
     {
       id: '3',
-      title: '3. Игра за CT',
+      title: 'Игра за CT',
+      name: 'КОНТР-ТЕРРОРИСТЫ',
       icon: 'Shield',
+      color: 'from-blue-600 to-indigo-600',
       sections: [
         {
           id: '3.1',
@@ -161,8 +166,10 @@ const Index = () => {
     },
     {
       id: '4',
-      title: '4. Игра за !control',
+      title: 'Игра за !control',
+      name: 'КОНТРОЛЛЕР',
       icon: 'Crown',
+      color: 'from-yellow-500 to-amber-600',
       sections: [
         {
           id: '4.1',
@@ -211,8 +218,10 @@ const Index = () => {
     },
     {
       id: '5',
-      title: '5. LR (Last Request)',
+      title: 'LR (Last Request)',
+      name: 'ПОСЛЕДНИЙ ЗАПРОС',
       icon: 'Target',
+      color: 'from-purple-500 to-pink-600',
       sections: [
         {
           id: '5.1',
@@ -244,8 +253,10 @@ const Index = () => {
     },
     {
       id: '6',
-      title: '6. FreeDay (FD)',
+      title: 'FreeDay (FD)',
+      name: 'ФРИДЕЙ',
       icon: 'Sunrise',
+      color: 'from-green-500 to-emerald-600',
       sections: [
         {
           id: '6.1',
@@ -289,8 +300,10 @@ const Index = () => {
     },
     {
       id: '7',
-      title: '7. Правила для Администрации',
+      title: 'Правила для Администрации',
+      name: 'АДМИНЫ',
       icon: 'ShieldCheck',
+      color: 'from-indigo-500 to-purple-600',
       sections: [
         {
           id: '7.1',
@@ -329,8 +342,10 @@ const Index = () => {
     },
     {
       id: '8',
-      title: '8. Паутинка (донат)',
+      title: 'Паутинка (донат)',
+      name: 'ДОНАТ',
       icon: 'Sparkles',
+      color: 'from-pink-500 to-rose-600',
       sections: [
         {
           id: '8.1',
@@ -350,8 +365,10 @@ const Index = () => {
     },
     {
       id: '9',
-      title: '9. Правила обороны',
+      title: 'Правила обороны',
+      name: 'ОБОРОНА',
       icon: 'Castle',
+      color: 'from-slate-500 to-gray-600',
       sections: [
         {
           id: '9.1',
@@ -372,8 +389,10 @@ const Index = () => {
     },
     {
       id: '10',
-      title: '10. Правила пряток',
+      title: 'Правила пряток',
+      name: 'ПРЯТКИ',
       icon: 'Eye',
+      color: 'from-teal-500 to-cyan-600',
       sections: [
         {
           id: '10.1',
@@ -396,8 +415,10 @@ const Index = () => {
     },
     {
       id: '11',
-      title: '11. Игры',
+      title: 'Игры',
+      name: 'ИГРОВЫЕ РЕЖИМЫ',
       icon: 'Gamepad2',
+      color: 'from-violet-500 to-fuchsia-600',
       sections: [
         {
           id: '11.1',
@@ -544,50 +565,52 @@ const Index = () => {
 
             <Tabs defaultValue="1" className="w-full">
               <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 bg-slate-900/50 p-2 h-auto">
-                {rules.slice(0, 11).map((rule) => (
+                {rules.map((rule) => (
                   <TabsTrigger
                     key={rule.id}
                     value={rule.id}
-                    className="flex items-center gap-2 data-[state=active]:bg-orange-500 data-[state=active]:text-white whitespace-normal h-auto py-2"
+                    className="flex flex-col items-center gap-1 data-[state=active]:bg-gradient-to-br data-[state=active]:from-orange-500 data-[state=active]:to-red-600 data-[state=active]:text-white whitespace-normal h-auto py-2 px-2"
                   >
-                    <Icon name={rule.icon || 'Circle'} size={16} />
-                    <span className="text-xs">{rule.title.split('.')[0]}.</span>
+                    <Icon name={rule.icon || 'Circle'} size={18} />
+                    <span className="text-xs font-semibold text-center leading-tight">{rule.name}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
 
               {(searchQuery ? filteredRules : rules).map((rule) => (
                 <TabsContent key={rule.id} value={rule.id} className="space-y-4 mt-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-                      <Icon name={rule.icon || 'Circle'} size={24} className="text-white" />
+                  <div className="flex items-center gap-4 mb-6 p-4 rounded-xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 border border-slate-700/50">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                      <Icon name={rule.icon || 'Circle'} size={32} className="text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-white">{rule.title}</h2>
+                    <div>
+                      <h2 className="text-3xl font-bold text-white">{rule.title}</h2>
+                      <p className="text-sm text-slate-400 font-semibold mt-1 tracking-wide">{rule.name}</p>
+                    </div>
                   </div>
 
-                  <Accordion type="single" collapsible className="space-y-3">
+                  <div className="space-y-6">
                     {rule.sections.map((section) => (
-                      <AccordionItem
-                        key={section.id}
-                        value={section.id}
-                        className="border border-slate-700/50 rounded-lg bg-slate-900/30 px-4"
-                      >
-                        <AccordionTrigger className="hover:no-underline text-white">
-                          <span className="text-base font-semibold text-left">{section.title}</span>
-                        </AccordionTrigger>
-                        <AccordionContent className="space-y-2 pt-2">
-                          <ul className="space-y-2">
+                      <Card key={section.id} className="border-slate-700/50 bg-gradient-to-br from-slate-800/60 to-slate-900/60 overflow-hidden">
+                        <CardHeader className={`bg-gradient-to-r ${rule.color} bg-opacity-10 border-b border-slate-700/50`}>
+                          <CardTitle className="text-xl text-white flex items-center gap-2">
+                            <Icon name="ChevronRight" size={20} className="text-orange-400" />
+                            {section.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-4">
+                          <ul className="space-y-3">
                             {section.items.map((item, idx) => (
-                              <li key={idx} className="text-sm text-slate-300 flex gap-2 leading-relaxed">
-                                <Icon name="ChevronRight" size={16} className="text-orange-500 mt-0.5 flex-shrink-0" />
+                              <li key={idx} className="text-sm text-slate-300 flex gap-3 leading-relaxed p-2 rounded-lg hover:bg-slate-800/40 transition-colors">
+                                <Icon name="Dot" size={20} className="text-orange-500 flex-shrink-0 mt-0.5" />
                                 <span>{item}</span>
                               </li>
                             ))}
                           </ul>
-                        </AccordionContent>
-                      </AccordionItem>
+                        </CardContent>
+                      </Card>
                     ))}
-                  </Accordion>
+                  </div>
                 </TabsContent>
               ))}
             </Tabs>
